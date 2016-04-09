@@ -22,5 +22,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		Utility u = new Utility();
+		u.getTweet();
 	}
 }
