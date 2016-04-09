@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.Status;
@@ -13,18 +14,21 @@ public class Utility {
 		return auth;
 	}
 
-	public void getTweet() {
+	public ArrayList<String> getTweet() {
 		Twitter twitter = getAuthInfo();
 		List<Status> statuses;
+		ArrayList<String> list = new ArrayList<>();
 		try {
 			statuses = twitter.getHomeTimeline();
-			System.out.println("Showing home timeline.");
 			for (Status status : statuses) {
 				System.out.println(status.getUser().getName() + ":" + status.getText());
+				list.add(status.getText());
 			}
 		} catch (TwitterException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		
+		return list;
 	}
 }
