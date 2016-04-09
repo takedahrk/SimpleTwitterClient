@@ -1,5 +1,9 @@
 package common;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +27,12 @@ public class Utility {
 			statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) {
 				System.out.println(status.getUser().getName() + ":" + status.getText());
-				TweetModel tweetModel = new TweetModel(new Image(getClass().getResourceAsStream("sample.jpg")),
-						status.getUser().getName(), status.getText());
+				InputStream imageUrl = new URL(status.getUser().getBiggerProfileImageURL()).openStream();
+				TweetModel tweetModel = new TweetModel(new Image(imageUrl), status.getUser().getName(),
+						status.getText());
 				list.add(tweetModel);
 			}
-		} catch (TwitterException e) {
+		} catch (TwitterException | IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
