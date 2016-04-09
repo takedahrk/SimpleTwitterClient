@@ -8,6 +8,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
+/**
+ * ツイート表示画面のコントローラ
+ * 
+ * @author Haruki Takeda
+ *
+ */
 public class TweetController {
 	@FXML
 	private ListView<TweetModel> listView;

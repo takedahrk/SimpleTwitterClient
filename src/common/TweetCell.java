@@ -8,6 +8,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * ツイート表示用カスタマイズセル
+ * 
+ * @author Haruki Takeda
+ *
+ */
 public class TweetCell extends ListCell<TweetModel> {
 	private HBox hbox;
 	private ImageView imageView;

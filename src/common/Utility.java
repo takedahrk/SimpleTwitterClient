@@ -2,7 +2,6 @@ package common;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,12 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
+/**
+ * 共通ユーティリティ
+ * 
+ * @author Haruki Takeda
+ *
+ */
 public class Utility {
 	public Twitter getAuthInfo() {
 		Twitter auth = new TwitterFactory().getInstance();
