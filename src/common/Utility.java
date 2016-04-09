@@ -1,8 +1,9 @@
-package application;
+package common;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.image.Image;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -14,21 +15,23 @@ public class Utility {
 		return auth;
 	}
 
-	public ArrayList<String> getTweet() {
+	public ArrayList<TweetModel> getTweet() {
 		Twitter twitter = getAuthInfo();
 		List<Status> statuses;
-		ArrayList<String> list = new ArrayList<>();
+		ArrayList<TweetModel> list = new ArrayList<>();
 		try {
 			statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) {
 				System.out.println(status.getUser().getName() + ":" + status.getText());
-				list.add(status.getText());
+				TweetModel tweetModel = new TweetModel(new Image(getClass().getResourceAsStream("sample.jpg")),
+						status.getUser().getName(), status.getText());
+				list.add(tweetModel);
 			}
 		} catch (TwitterException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		
+
 		return list;
 	}
 }
