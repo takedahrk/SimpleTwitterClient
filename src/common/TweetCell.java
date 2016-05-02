@@ -16,26 +16,36 @@ import javafx.scene.text.Text;
  */
 public class TweetCell extends ListCell<TweetModel> {
 	private HBox hbox;
-	private ImageView imageView;
 	private VBox vbox;
+	// アカウントアイコン画像
+	private ImageView imageView;
+	// ツイート本文画像
+	private ImageView tweetImageView;
+	// アカウント名
 	private Text name;
+	// ツイート本文
 	private Text tweet;
 
 	public TweetCell() {
-		hbox = new HBox(5);
+		hbox = new HBox(2);
 		imageView = new ImageView();
 		imageView.setFitWidth(64);
 		imageView.setFitHeight(64);
 
-		vbox = new VBox(5);
+		vbox = new VBox(3);
 		name = new Text();
 		name.setFont(new Font("System Bold", 18));
 		tweet = new Text();
+		this.tweetImageView = new ImageView();
+
 		VBox.setVgrow(name, Priority.NEVER);
 		VBox.setVgrow(tweet, Priority.ALWAYS);
+		if (this.tweetImageView != null) {
+			VBox.setVgrow(tweetImageView, Priority.NEVER);
+		}
 		HBox.setHgrow(imageView, Priority.NEVER);
 		HBox.setHgrow(vbox, Priority.ALWAYS);
-		vbox.getChildren().addAll(name, tweet);
+		vbox.getChildren().addAll(name, tweet, tweetImageView);
 		hbox.getChildren().addAll(imageView, vbox);
 	}
 
@@ -47,9 +57,15 @@ public class TweetCell extends ListCell<TweetModel> {
 			setText(null);
 			setGraphic(null);
 		} else {
-			imageView.setImage(tweetModel.getImage());
+			imageView.setImage(tweetModel.getIconImage());
 			name.setText(tweetModel.getName());
 			tweet.setText(tweetModel.getTweet());
+			if (!tweetModel.getTweetImages().isEmpty()) {
+				tweetModel.getTweetImages().stream().forEach(image -> tweetImageView.setImage(image));
+			} else {
+				tweetImageView.setImage(null);
+			}
+
 			setGraphic(hbox);
 		}
 	}

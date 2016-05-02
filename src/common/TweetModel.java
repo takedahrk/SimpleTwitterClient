@@ -1,5 +1,7 @@
 package common;
 
+import java.util.List;
+
 import javafx.scene.image.Image;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -13,7 +15,12 @@ import lombok.Value;
 @Value
 @AllArgsConstructor
 public class TweetModel {
-	private Image image;
+	// アカウントアイコン画像
+	private Image iconImage;
+	// アカウント名
 	private String name;
+	// ツイート本文
 	private String tweet;
+	// ツイート本文画像
+	private List<Image> tweetImages;
 }

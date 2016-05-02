@@ -26,6 +26,7 @@ public class TweetController {
 		this.listView.setCellFactory(param -> new TweetCell());
 		this.getTimeLine();
 
+		// 90秒ごとにリストを更新する
 		Timeline timer = new Timeline(new KeyFrame(Duration.millis(90000), event -> {
 			this.getTimeLine();
 		}));

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
+import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -24,23 +25,39 @@ public class Utility {
 		return auth;
 	}
 
-	static public ArrayList<TweetModel> getTweet() {
+	static public List<TweetModel> getTweet() {
+		// 認証情報
 		Twitter twitter = getAuthInfo();
-		List<Status> statuses;
-		ArrayList<TweetModel> list = new ArrayList<>();
+		// ステータス格納
+		List<Status> statuses = new ArrayList<>();
+		// ツイート表示用リスト
+		List<TweetModel> tweetModels = new ArrayList<>();
+
 		try {
 			statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) {
-				InputStream imageUrl = new URL(status.getUser().getBiggerProfileImageURL()).openStream();
-				TweetModel tweetModel = new TweetModel(new Image(imageUrl), status.getUser().getName(),
-						status.getText());
-				list.add(tweetModel);
+				// アイコンイメージの取得
+				InputStream iconImageUrl = new URL(status.getUser().getBiggerProfileImageURL()).openStream();
+				Image iconImage = new Image(iconImageUrl);
+
+				// ツイート本文イメージの取得
+				List<Image> images = new ArrayList<>();
+				MediaEntity[] medias = status.getMediaEntities();
+				for (MediaEntity media : medias) {
+					// JPG形式のメディアのみ取得
+					if (media.getMediaURL().endsWith(".jpg")) {
+						InputStream imageUrl = new URL(media.getMediaURL()).openStream();
+						images.add(new Image(imageUrl));
+					}
+				}
+
+				TweetModel tweetModel = new TweetModel(iconImage, status.getUser().getName(), status.getText(), images);
+				tweetModels.add(tweetModel);
 			}
 		} catch (TwitterException | IOException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
-		return list;
+		return tweetModels;
 	}
 }
