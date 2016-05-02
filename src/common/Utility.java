@@ -19,19 +19,18 @@ import twitter4j.TwitterFactory;
  *
  */
 public class Utility {
-	public Twitter getAuthInfo() {
+	static public Twitter getAuthInfo() {
 		Twitter auth = new TwitterFactory().getInstance();
 		return auth;
 	}
 
-	public ArrayList<TweetModel> getTweet() {
+	static public ArrayList<TweetModel> getTweet() {
 		Twitter twitter = getAuthInfo();
 		List<Status> statuses;
 		ArrayList<TweetModel> list = new ArrayList<>();
 		try {
 			statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) {
-				System.out.println(status.getUser().getName() + ":" + status.getText());
 				InputStream imageUrl = new URL(status.getUser().getBiggerProfileImageURL()).openStream();
 				TweetModel tweetModel = new TweetModel(new Image(imageUrl), status.getUser().getName(),
 						status.getText());
